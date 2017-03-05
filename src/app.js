@@ -1,0 +1,1 @@
+module.exports = document.write("It doesn't stop");

@@ -4,6 +4,7 @@ var watch = require('gulp-watch');
 var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
+var webpack = require('gulp-webpack');
 var
   source = 'src/',
   dest = 'dest/';
@@ -25,6 +26,11 @@ gulp.task('browser-sync', function() {
   return browserSync.init(options.browserSync);
 });
 
+gulp.task('webpack', function() {
+  return gulp.src('src/main.js')
+    .pipe(webpack())
+    .pipe(gulp.dest('dest/'));
+});
 
 gulp.task('compile', function () {
   return gulp.src('src/main.js')
@@ -47,7 +53,7 @@ gulp.task('watch', function (cb) {
 });
 
 
-gulp.task('default', ['compile', 'copy', 'watch', 'browser-sync']);
+gulp.task('default', ['compile', 'copy', 'watch', 'webpack', 'browser-sync']);
 
 gulp.task('dev', function (cb) {
   return runSequence(
